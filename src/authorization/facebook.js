@@ -11,6 +11,7 @@ const FBStrategy = new FaceBookStrategy(
   },
   async function (accessToken, refreshToken, profile, passNext) {
     const user = await UserSchema.findOne({ fbId: profile.id });
+    console.log(profile);
     if (user) {
       const tokens = await JWTAuth(user);
       user.refreshToken = tokens.refreshToken;
@@ -19,7 +20,7 @@ const FBStrategy = new FaceBookStrategy(
     } else {
       try {
         const newUser = {
-          name: profile.displayName,
+          name: profile.name.givenName || profile.displayName.split(" ")[0],
           role: "user",
           fbId: profile.id,
           refreshToken: "",

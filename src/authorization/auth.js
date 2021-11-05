@@ -8,11 +8,13 @@ const authorizRoute = express.Router();
 
 authorizRoute.post("/register", async (req, res, next) => {
   try {
-    const user = await UserSchema.find({ email: req.body.email });
-    if (user.length === 0) {
+    const user = await UserSchema.findOne({ email: req.body.email });
+    if (!user) {
       const newUser = new UserSchema(req.body);
+      const { accessToken, refreshToken } = await JWTAuth(newUser);
+      newUser.refreshToken = refreshToken;
       const nUser = await newUser.save();
-      const { accessToken, refreshToken } = await JWTAuth(nUser);
+      //
       res.cookie("accessToken", accessToken, {
         httpOnly: true,
         secure: (process.env.NODE_ENV = "production" ? true : false),
@@ -91,7 +93,7 @@ authorizRoute.get(
       });
       res.redirect("http://localhost:3000");
     } catch (error) {
-      console.log(error);
+      //   console.log(error);
       next(createHttpError(500));
     }
   }
