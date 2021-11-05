@@ -4,6 +4,7 @@ import passport from "passport";
 import UserSchema from "../user/schema.js";
 import { hostOnlyMiddleware } from "./hostMiddleware.js";
 import { JWTAuthMiddleware } from "./token.js";
+import accommodationSchema from "../accommodation/accommodationSchema.js";
 import { JWTAuth } from "./tokenAuth.js";
 
 const authorizRoute = express.Router();
@@ -123,5 +124,5 @@ authorizRoute.get(
     }
   }
 );
-s;
+
 export default authorizRoute;

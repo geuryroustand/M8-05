@@ -11,16 +11,16 @@ import {
   forbiddenHandler,
   unauthorizedHandler,
 } from "./errorHadlers.js";
-import FBStrategy from "./authorization/facebook.js";
-import googleStrategy from "./authorization/google.js";
+// import FBStrategy from "./authorization/facebook.js";
+// import googleStrategy from "./authorization/google.js";
 
 const server = express();
 
 const port = process.env.PORT;
 
 //***********MIDDLEWARES ********************** */
-passport.use("facebook", FBStrategy);
-passport.use("google", googleStrategy);
+// passport.use("facebook", FBStrategy);
+// passport.use("google", googleStrategy);
 
 server.use(cors());
 server.use(express.json());
