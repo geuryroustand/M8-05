@@ -8,9 +8,7 @@ const accommodationRouter = express.Router();
 
 accommodationRouter.get("/", JWTAuthMiddleware, async (req, res, next) => {
   try {
-    console.log(req.user);
-    const getAccommodations = await accommodationSchema.find();
-    // .populate("host");
+    const getAccommodations = await accommodationSchema.find().populate("host");
 
     res.send(getAccommodations);
   } catch (error) {

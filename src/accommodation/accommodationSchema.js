@@ -7,7 +7,7 @@ const accommodationSchema = new Schema({
     type: String,
     required: [true, "Accommodation name is required"],
   },
-  host: [{ type: Schema.Types.ObjectId, ref: "Users " }],
+  host: [{ type: Schema.Types.ObjectId, ref: "User" }],
 
   description: {
     type: String,
