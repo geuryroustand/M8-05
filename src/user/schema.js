@@ -8,16 +8,13 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: function () {
-      return !Boolean(this.fbId);
+      return !Boolean(this.fbId || this.googleId);
     },
   },
   password: {
     type: String,
     required: function () {
-      return !Boolean(this.fbId);
-    },
-    required: function () {
-      return !Boolean(this.fbId);
+      return !Boolean(this.fbId || this.googleId);
     },
   },
   role: { type: String, required: true },
@@ -25,7 +22,13 @@ const UserSchema = new Schema({
   fbId: {
     type: String,
     required: function () {
-      return !Boolean(this.password);
+      return !Boolean(this.password || this.googleId);
+    },
+  },
+  googleId: {
+    type: String,
+    required: function () {
+      return !Boolean(this.password || this.fbId);
     },
   },
   refreshToken: { type: String },

@@ -9,8 +9,6 @@ const authorizRoute = express.Router();
 authorizRoute.post("/register", async (req, res, next) => {
   try {
     const user = await UserSchema.find({ email: req.body.email });
-    console.log(user);
-    console.log(req.body);
     if (user.length === 0) {
       const newUser = new UserSchema(req.body);
       const nUser = await newUser.save();
@@ -58,6 +56,32 @@ authorizRoute.get(
       });
       res.redirect("http://localhost:3000");
     } catch (error) {
+      next(createHttpError(500));
+    }
+  }
+);
+authorizRoute.get(
+  "/loginGoogle",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
+authorizRoute.get(
+  "/redirectGoogle",
+  passport.authenticate("google"),
+  async (req, res, next) => {
+    try {
+      res.cookie("accessToken", req.user.tokens.accessToken, {
+        httpOnly: true,
+        secure: (process.env.NODE_ENV = "production" ? true : false),
+        sameSite: "none",
+      });
+      res.cookie("refreshToken", req.user.tokens.refreshToken, {
+        httpOnly: true,
+        secure: (process.env.NODE_ENV = "production" ? true : false),
+        sameSite: "none",
+      });
+      res.redirect("http://localhost:3000");
+    } catch (error) {
+      console.log(error);
       next(createHttpError(500));
     }
   }
