@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import listEndpoints from "express-list-endpoints";
 import passport from "passport";
-
+import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import authorizRoute from "./authorization/auth.js";
 import {
@@ -10,16 +10,18 @@ import {
   forbiddenHandler,
   unauthorizedHandler,
 } from "./errorHadlers.js";
+import FBStrategy from "./authorization/facebook.js";
 
 const server = express();
 
 const port = process.env.PORT;
 
 //***********MIDDLEWARES ********************** */
-// passport.use("facebook", FBStrategy);
+passport.use("facebook", FBStrategy);
 
 server.use(cors());
 server.use(express.json());
+server.use(cookieParser());
 server.use(passport.initialize());
 
 //************Router ****************

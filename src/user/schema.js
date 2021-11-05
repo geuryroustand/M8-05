@@ -5,10 +5,29 @@ const { Schema, model } = mongoose;
 
 const UserSchema = new Schema({
   name: { type: String, required: true },
-  email: { type: String, required: true },
-  password: { type: String, required: true },
+  email: {
+    type: String,
+    required: function () {
+      return !Boolean(this.fbId);
+    },
+  },
+  password: {
+    type: String,
+    required: function () {
+      return !Boolean(this.fbId);
+    },
+    required: function () {
+      return !Boolean(this.fbId);
+    },
+  },
   role: { type: String, required: true },
-  googleId: { type: String },
+  //   googleId: { type: String },
+  fbId: {
+    type: String,
+    required: function () {
+      return !Boolean(this.password);
+    },
+  },
   refreshToken: { type: String },
 });
 

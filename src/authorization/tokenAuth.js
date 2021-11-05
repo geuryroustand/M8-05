@@ -5,8 +5,6 @@ import createHttpError from "http-errors";
 export const JWTAuth = async (user) => {
   const accessToken = await generateToken({ _id: user._id });
   const refreshToken = await generateRefreshToken({ _id: user._id });
-  user.refreshToken = refreshToken;
-  await user.save();
   return { accessToken, refreshToken };
 };
 
