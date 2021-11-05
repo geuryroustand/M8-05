@@ -47,7 +47,7 @@ authorizRoute.post("/login", async (req, res, next) => {
 });
 authorizRoute.get(
   "/loginFB",
-  passport.authenticate("facebook", { scope: "email" })
+  passport.authenticate("facebook", { scope: ["email", "public_profile"] })
 );
 authorizRoute.get(
   "/redirectFB",
