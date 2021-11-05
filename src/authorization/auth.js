@@ -13,6 +13,16 @@ authorizRoute.post("/register", async (req, res, next) => {
       const newUser = new UserSchema(req.body);
       const nUser = await newUser.save();
       const { accessToken, refreshToken } = await JWTAuth(nUser);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: true,
+        secure: (process.env.NODE_ENV = "production" ? true : false),
+        sameSite: "none",
+      });
+      res.cookie("refreshToken", refreshToken, {
+        httpOnly: true,
+        secure: (process.env.NODE_ENV = "production" ? true : false),
+        sameSite: "none",
+      });
       res.send({ nUser, accessToken, refreshToken });
     } else {
       next(createHttpError(401, "User already exists"));
