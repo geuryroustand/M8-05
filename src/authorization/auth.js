@@ -49,7 +49,7 @@ authorizRoute.post("/login", async (req, res, next) => {
 });
 authorizRoute.get(
   "/loginFB",
-  passport.authenticate("facebook", { scope: ["email", "public_profile"] })
+  passport.authenticate("facebook", { scope: "email" })
 );
 authorizRoute.get(
   "/redirectFB",
