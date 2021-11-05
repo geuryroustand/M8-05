@@ -17,7 +17,7 @@ const UserSchema = new Schema({
       return !Boolean(this.fbId || this.googleId);
     },
   },
-  role: { type: String, required: true },
+  role: { type: String, required: true, default: "guest" },
   //   googleId: { type: String },
   fbId: {
     type: String,

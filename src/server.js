@@ -28,7 +28,9 @@ server.use(cookieParser());
 server.use(passport.initialize());
 
 //************Router ****************
-server.use("/auth", authorizRoute);
+// server.use("/auth", authorizRoute);
+
+server.use("/user", authorizRoute);
 
 server.use("/accommodation", accommodationRouter);
 server.use(unauthorizedHandler);
