@@ -1,9 +1,18 @@
 import express from "express";
 import createHttpError from "http-errors";
 import UserSchema from "../user/schema.js";
+import { JWTAuthMiddleware } from "./token.js";
 import { JWTAuth } from "./tokenAuth.js";
 
 const authorizRoute = express.Router();
+
+authorizRoute.get("/me", JWTAuthMiddleware, async (req, res, next) => {
+  try {
+    res.send(req.user);
+  } catch (error) {
+    next(error);
+  }
+});
 
 authorizRoute.post("/register", async (req, res, next) => {
   try {

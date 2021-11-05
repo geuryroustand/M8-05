@@ -24,7 +24,7 @@ server.use(express.json());
 server.use(passport.initialize());
 
 //************Router ****************
-server.use("/auth", authorizRoute);
+server.use("/user", authorizRoute);
 
 server.use("/accommodation", accommodationRouter);
 server.use(unauthorizedHandler);

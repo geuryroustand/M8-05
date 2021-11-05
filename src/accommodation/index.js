@@ -1,18 +1,20 @@
 import express from "express";
+import { JWTAuthMiddleware } from "../authorization/token.js";
 import accommodationSchema from "./accommodationSchema.js";
 
 import accommodation from "./accommodationSchema.js";
 
 const accommodationRouter = express.Router();
 
-accommodationRouter.get("/", async (req, res, next) => {
+accommodationRouter.get("/", JWTAuthMiddleware, async (req, res, next) => {
   try {
+    console.log(req.user);
     const getAccommodations = await accommodationSchema.find();
     // .populate("host");
 
     res.send(getAccommodations);
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 });
 
@@ -32,7 +34,7 @@ accommodationRouter.get("/:accMoId", async (req, res, next) => {
   }
 });
 
-accommodationRouter.post("/", async (req, res, next) => {
+accommodationRouter.post("/", JWTAuthMiddleware, async (req, res, next) => {
   try {
     const createdAccommodation = await accommodationSchema.create(req.body);
 
