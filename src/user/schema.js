@@ -8,7 +8,7 @@ const UserSchema = new Schema({
   email: {
     type: String,
     required: function () {
-      return !Boolean(this.fbId || this.googleId);
+      return !Boolean(this.fbId);
     },
   },
   password: {
