@@ -1,6 +1,8 @@
 import express from "express";
 import createHttpError from "http-errors";
+import accommodationSchema from "../accommodation/accommodationSchema.js";
 import UserSchema from "../user/schema.js";
+import { hostOnlyMiddleware } from "./hostMiddleware.js";
 import { JWTAuthMiddleware } from "./token.js";
 import { JWTAuth } from "./tokenAuth.js";
 
@@ -13,6 +15,21 @@ authorizRoute.get("/me", JWTAuthMiddleware, async (req, res, next) => {
     next(error);
   }
 });
+
+authorizRoute.get(
+  "/me/accommodation",
+  JWTAuthMiddleware,
+  hostOnlyMiddleware,
+  async (req, res, next) => {
+    try {
+      const getAccommodations = await accommodationSchema.find();
+
+      res.send(getAccommodations);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 authorizRoute.post("/register", async (req, res, next) => {
   try {
